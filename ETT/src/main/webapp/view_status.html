@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Task Status - SB ENTERPRISES</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+/* Global Styles */
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: 'Arial', sans-serif;
+	background: #f8f9fa;
+}
+
+.container {
+	max-width: 600px;
+	margin: 50px auto;
+	padding: 20px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+.task-details {
+	margin: 20px 0;
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background: #f1f1f1;
+}
+
+.task-details label {
+	display: block;
+	margin: 10px 0 5px;
+	font-weight: bold;
+}
+
+.task-details input {
+	width: calc(100% - 20px);
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	background: white;
+}
+
+button {
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background: #007bff;
+	color: white;
+	cursor: pointer;
+	margin-top: 20px;
+	transition: background 0.3s;
+}
+
+button:hover {
+	background: #0056b3;
+}
+
+.task-header {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 2px solid #007bff;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+}
+
+.task-header h3 {
+	margin: 0;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h2>View Task Status</h2>
+		<div class="task-header">
+			<h3>Task Details</h3>
+			<button onclick="downloadPDF()">Download PDF</button>
+		</div>
+
+	</div>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script>
+        // Sample task data (you would normally fetch this from your database)
+        const tasks = [
+            {
+                username: "ADMIN",
+                date: "2024-07-25",
+                day: "Thursday",
+                time: "10:00 AM",
+                task: "Project Meeting",
+                duration: "1 hour",
+                description: "Discuss project status and upcoming tasks."
+            },
+            // Add more tasks as needed
+        ];
+
+        function populateTaskDetails() {
+            const task = tasks[0]; // For this example, we take the first task
+            document.getElementById('username').value = task.username;
+            document.getElementById('date').value = task.date;
+            document.getElementById('day').value = task.day;
+            document.getElementById('time').value = task.time;
+            document.getElementById('task').value = task.task;
+            document.getElementById('duration').value = task.duration;
+            document.getElementById('description').value = task.description;
+        }
+
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(16);
+            doc.text("Task Status Report", 20, 20);
+            doc.setFontSize(12);
+
+            const task = tasks[0]; // For this example, we take the first task
+            let y = 30; // Initial vertical position for text
+
+            doc.setFontSize(14);
+            doc.text(`Username: ${task.username}`, 20, y);
+            y += 10;
+            doc.text(`Date: ${task.date}`, 20, y);
+            y += 10;
+            doc.text(`Day: ${task.day}`, 20, y);
+            y += 10;
+            doc.text(`Time: ${task.time}`, 20, y);
+            y += 10;
+            doc.text(`Task: ${task.task}`, 20, y);
+            y += 10;
+            doc.text(`Duration: ${task.duration}`, 20, y);
+            y += 10;
+            doc.text(`Description: ${task.description}`, 20, y);
+            y += 15;
+
+            doc.save("task_status_report.pdf");
+        }
+
+        // Call the function to populate the task details when the page loads
+        window.onload = populateTaskDetails;
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events - SB ENTERPRISES</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: 'Arial', sans-serif;
+}
+
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url('https://wallpaperaccess.com/full/656670.jpg') no-repeat
+		center center fixed;
+	background-size: cover;
+	filter: blur(8px);
+	z-index: -1;
+}
+
+.container {
+	max-width: 800px;
+	margin: 50px auto;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	text-align: center;
+}
+
+h2 {
+	margin-bottom: 20px;
+}
+
+.circle-box {
+	display: inline-block;
+	margin: 20px;
+	padding: 30px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+	transition: transform 0.3s;
+}
+
+.circle-box:hover {
+	transform: scale(1.05);
+}
+
+.icon {
+	font-size: 40px;
+	color: #333;
+}
+
+.circle-box h3 {
+	margin: 10px 0 0;
+}
+
+.form-container {
+	display: none;
+	margin-top: 20px;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	text-align: left;
+}
+
+.form-container input {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
+
+.form-container button {
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background: #333;
+	color: white;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.form-container button:hover {
+	background: #555;
+}
+</style>
+</head>
+<body>
+	<div class="background"></div>
+	<div class="container">
+		<h2>Event Management</h2>
+		<div class="circle-box" onclick="openAddTask()">
+			<i class="fas fa-plus icon"></i>
+			<h3>Add Task</h3>
+		</div>
+		<div class="circle-box" onclick="openEditTask()">
+			<i class="fas fa-edit icon"></i>
+			<h3>Edit Task</h3>
+		</div>
+		<div class="circle-box" onclick="openDeleteTask()">
+			<i class="fas fa-trash icon"></i>
+			<h3>Delete Task</h3>
+		</div>
+
+		<div class="form-container" id="taskForm">
+			<h3 id="formTitle">Add Task</h3>
+			<input type="date" id="taskDate" placeholder="Date"> <input
+				type="text" id="taskDay" placeholder="Day"> <input
+				type="time" id="taskTime" placeholder="Time"> <input
+				type="text" id="taskName" placeholder="Task"> <input
+				type="text" id="taskDuration" placeholder="Duration">
+			<button onclick="saveTask()">Save</button>
+		</div>
+	</div>
+
+	<script>
+        let currentTaskId = null; // Variable to store the current task ID for editing
+        const tasks = []; // Array to store tasks
+
+        function openAddTask() {
+            document.getElementById('formTitle').innerText = 'Add Task';
+            clearForm();
+            document.getElementById('taskForm').style.display = 'block';
+        }
+
+        function openEditTask() {
+            if (tasks.length === 0) {
+                alert("No tasks available to edit.");
+                return;
+            }
+            document.getElementById('formTitle').innerText = 'Edit Task';
+            // Simulating selecting the first task for editing
+            const task = tasks[0]; // Replace with actual task selection logic
+            populateForm(task);
+            document.getElementById('taskForm').style.display = 'block';
+        }
+
+        function openDeleteTask() {
+            if (tasks.length === 0) {
+                alert("No tasks available to delete.");
+                return;
+            }
+            // Simulating deleting the first task
+            tasks.splice(0, 1); // Replace with actual task selection logic
+            alert("Task deleted successfully!");
+        }
+
+        function saveTask() {
+            const date = document.getElementById('taskDate').value;
+            const day = document.getElementById('taskDay').value;
+            const time = document.getElementById('taskTime').value;
+            const task = document.getElementById('taskName').value;
+            const duration = document.getElementById('taskDuration').value;
+
+            if (document.getElementById('formTitle').innerText === 'Add Task') {
+                const newTask = { id: tasks.length + 1, date, day, time, task, duration };
+                tasks.push(newTask);
+                alert("Task added successfully!");
+            } else {
+                const taskIndex = tasks.findIndex(t => t.id === currentTaskId);
+                if (taskIndex > -1) {
+                    tasks[taskIndex] = { id: currentTaskId, date, day, time, task, duration };
+                    alert("Task updated successfully!");
+                }
+            }
+            clearForm();
+            document.getElementById('taskForm').style.display = 'none';
+        }
+
+        function populateForm(task) {
+            currentTaskId = task.id; // Store current task ID for editing
+            document.getElementById('taskDate').value = task.date;
+            document.getElementById('taskDay').value = task.day;
+            document.getElementById('taskTime').value = task.time;
+            document.getElementById('taskName').value = task.task;
+            document.getElementById('taskDuration').value = task.duration;
+        }
+
+        function clearForm() {
+            document.getElementById('taskDate').value = '';
+            document.getElementById('taskDay').value = '';
+            document.getElementById('taskTime').value = '';
+            document.getElementById('taskName').value = '';
+            document.getElementById('taskDuration').value = '';
+            currentTaskId = null; // Reset current task ID
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - SB ENTERPRISES</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+/* Global Styles */
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: 'Arial', sans-serif;
+}
+
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url('https://wallpaperaccess.com/full/656670.jpg') no-repeat
+		center center fixed;
+	background-size: cover;
+	filter: blur(8px);
+	z-index: -1;
+}
+
+.container {
+	max-width: 800px;
+	margin: 50px auto;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+	text-align: center;
+}
+
+.operations {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+
+.operation-box {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+	transition: background 0.3s;
+	text-align: center;
+}
+
+.operation-box:hover {
+	background: rgba(255, 255, 255, 1);
+}
+
+.operation-box i {
+	font-size: 40px;
+	color: #333;
+	font-weight: bold;
+}
+
+.operation-box p {
+	margin: 0;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+a {
+	font-size: 1.6rem;
+	text-decoration: none;
+	font-family: monospace;
+	font-weight: bold;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+	<div class="background"></div>
+	<div class="container">
+		<div class="nav">
+			<a>Admin Dashboard</a> <a href="admin_login.html">Logout</a>
+		</div>
+
+		<div class="operations">
+			<div class="operation-box" onclick="openAddTask()">
+				<i class="fas fa-plus-circle"></i>
+				<p>Add Task</p>
+			</div>
+			<div class="operation-box" onclick="openAddEmp()">
+				<i class="fas fa-plus-circle"></i>
+				<p>Add Employee</p>
+			</div>
+			<div class="operation-box" onclick="openDeleteTask()">
+				<p>
+				<form action="viewEmployee" method="get">
+					<button>
+						<i class="fas fa-chart-line"></i>
+						<p>View Employees
+					</button>
+					</p>
+				</form>
+				</p>
+			</div>
+			<div class="operation-box">
+
+				<p>
+				<form action="viewTasks" method="get">
+					<button>
+						<i class="fas fa-chart-line"></i>
+						<p>View Tasks
+					</button>
+					</p>
+				</form>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<script>
+        function openAddTask() {
+            window.location.href = 'add_task.html';
+        }
+
+        function openAddEmp() {
+            window.location.href = 'add_emp.html';
+        }
+
+        function openDeleteTask() {
+            window.location.href = 'delete_task.html'; 
+        }
+
+      
+    </script>
+</body>
+</html>
